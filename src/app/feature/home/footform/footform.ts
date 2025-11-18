@@ -9,6 +9,7 @@ import { FlowbiteService } from '../../../core/service/service/flowbite-service'
 import { initFlowbite } from 'flowbite';
 import { TreeModule } from 'primeng/tree';
 import { TreeNode } from 'primeng/api';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-footform',
@@ -17,9 +18,8 @@ import { TreeNode } from 'primeng/api';
   styleUrl: './footform.css',
 })
 export class Footform {
-// constructor(private flowbiteService: FlowbiteService) {
-//   this.subDropdownOpen.set(new Array(this.services.length).fill(false));
-// }
+
+  private httpClient=inject(HttpClient)
 
 constructor(
   private flowbiteService: FlowbiteService,
@@ -38,12 +38,13 @@ private readonly auth=inject(Auth)
 forminit!: FormGroup;
 
 ngOnInit(): void {
-
+  
       this.flowbiteService.loadFlowbite((flowbite) => {
         initFlowbite();
       });
 
   this.enterForm();
+  
    AOS.init({
     //  disable: window.innerWidth < 768,
       duration: 1000,
@@ -61,17 +62,22 @@ enterForm(): void {
   });
 }
 
+
+
+
 onSubmit() {
   if (this.forminit.valid) {
-    console.log(this.forminit.value);
-      this.auth.saveFormData(this.forminit.value);
-
+    this.auth.dataForm(this.forminit.value).subscribe({
+      next: res => console.log('done', res),
+      error: err => console.error('   nodone', err)
+    });
     this.forminit.reset();
     this.selectedService.set('');
   } else {
     this.forminit.markAllAsTouched();
   }
 }
+
 
 
 

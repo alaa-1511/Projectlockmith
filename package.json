@@ -36,6 +36,7 @@
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@tailwindcss/postcss": "^4.1.16",
     "aos": "^2.3.4",
+    "emailjs-com": "^3.2.0",
     "express": "^5.1.0",
     "flowbite": "^3.1.2",
     "ngx-cookie-service": "^20.1.1",
